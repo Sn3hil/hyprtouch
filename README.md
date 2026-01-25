@@ -2,7 +2,7 @@
 
 A keyboard-driven mouse control overlay for Hyprland, built with GTK4 and Layer Shell.
 
-<video src="assets/hyprtouch.mp4" controls title="Demo"></video>
+https://github.com/user-attachments/assets/c3211b43-d73b-444e-93d7-0dc1571f3256
 
 ## Installation & Build
 
