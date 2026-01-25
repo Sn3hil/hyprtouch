@@ -17,6 +17,8 @@ public:
     // Returns true if the event was handled.
     bool handle_key_press(guint keyval, GdkModifierType state);
     bool handle_key_release(guint keyval, GdkModifierType state);
+    
+    void reset();
 
 private:
     void process_selection();

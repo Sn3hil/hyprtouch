@@ -234,4 +234,14 @@ void Handler::confirm_selection() {
     }
 }
 
-} 
+void Handler::reset() {
+    current_path_.clear();
+    selected_row_ = -1;
+    selected_col_ = -1;
+    level_ = 1;
+    waiting_for_click_ = false;
+    pending_click_ = false;
+}
+
+}  // namespace hyprtouch::input
+

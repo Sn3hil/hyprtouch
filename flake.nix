@@ -15,7 +15,7 @@
         packages.default = pkgs.stdenv.mkDerivation {
           pname = "hyprtouch";
           version = "0.1.0";
-
+ 
           src = ./.;
 
             nativeBuildInputs = [

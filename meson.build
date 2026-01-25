@@ -14,6 +14,12 @@ sources = files(
   'src/hypr/monitor.cpp',
   'src/overlay/window.cpp',
   'src/overlay/grid.cpp',
+  'src/ipc/socket.cpp',
+  'src/ipc/server.cpp',
+  'src/ipc/client.cpp',
+  'src/ipc/protocol.cpp',
+  'src/daemon/daemon.cpp',
+  'src/daemon/lockfile.cpp',
 )
 
 executable('hyprtouch',

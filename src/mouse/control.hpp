@@ -7,6 +7,7 @@ namespace hyprtouch::mouse {
 
 void set_pre_click_callback(std::function<void()> callback);
 void set_post_click_quit(std::function<void()> callback);
+void set_post_click_hide(std::function<void()> callback);
 
 bool move_cursor(int x, int y);
 

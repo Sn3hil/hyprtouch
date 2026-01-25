@@ -17,6 +17,7 @@ bool run_command(const std::string &cmd) {
 
 std::function<void()> pre_click_callback;
 std::function<void()> post_click_quit;
+std::function<void()> post_click_hide;
 
 }  // namespace
 
@@ -26,6 +27,10 @@ void set_pre_click_callback(std::function<void()> callback) {
 
 void set_post_click_quit(std::function<void()> callback) {
     post_click_quit = std::move(callback);
+}
+
+void set_post_click_hide(std::function<void()> callback) {
+    post_click_hide = std::move(callback);
 }
 
 bool move_cursor(int x, int y) {
@@ -39,12 +44,15 @@ void click_left() {
     if (pre_click_callback) {
         pre_click_callback();
     }
-    auto callback = post_click_quit;
-    std::thread([callback]() {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    auto quit_callback = post_click_quit;
+    auto hide_callback = post_click_hide;
+    std::thread([quit_callback, hide_callback]() {
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
         run_command("wlrctl pointer click left");
-        if (callback) {
-            callback();
+        if (hide_callback) {
+            hide_callback();
+        } else if (quit_callback) {
+            quit_callback();
         }
     }).detach();
 }
@@ -53,12 +61,15 @@ void click_right() {
     if (pre_click_callback) {
         pre_click_callback();
     }
-    auto callback = post_click_quit;
-    std::thread([callback]() {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    auto quit_callback = post_click_quit;
+    auto hide_callback = post_click_hide;
+    std::thread([quit_callback, hide_callback]() {
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
         run_command("wlrctl pointer click right");
-        if (callback) {
-            callback();
+        if (hide_callback) {
+            hide_callback();
+        } else if (quit_callback) {
+            quit_callback();
         }
     }).detach();
 }
@@ -67,12 +78,15 @@ void click_middle() {
     if (pre_click_callback) {
         pre_click_callback();
     }
-    auto callback = post_click_quit;
-    std::thread([callback]() {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    auto quit_callback = post_click_quit;
+    auto hide_callback = post_click_hide;
+    std::thread([quit_callback, hide_callback]() {
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
         run_command("wlrctl pointer click middle");
-        if (callback) {
-            callback();
+        if (hide_callback) {
+            hide_callback();
+        } else if (quit_callback) {
+            quit_callback();
         }
     }).detach();
 }
@@ -81,14 +95,17 @@ void double_click_left() {
     if (pre_click_callback) {
         pre_click_callback();
     }
-    auto callback = post_click_quit;
-    std::thread([callback]() {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    auto quit_callback = post_click_quit;
+    auto hide_callback = post_click_hide;
+    std::thread([quit_callback, hide_callback]() {
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
         run_command("wlrctl pointer click left");
         std::this_thread::sleep_for(std::chrono::milliseconds(40));
         run_command("wlrctl pointer click left");
-        if (callback) {
-            callback();
+        if (hide_callback) {
+            hide_callback();
+        } else if (quit_callback) {
+            quit_callback();
         }
     }).detach();
 }
