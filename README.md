@@ -2,6 +2,7 @@
 
 A keyboard-driven mouse control overlay for Hyprland, built with GTK4 and Layer Shell.
 
+<video src="assets/hyprtouch.mp4" controls title="Demo"></video>
 
 ## Installation & Build
 
@@ -44,11 +45,36 @@ ninja -C build
 
 ## Usage
 
+The recommended way to use hyprtouch is as a daemon for instant response times.
+
+### Daemon Mode (Recommended)
+
+Start the daemon once (e.g., in your Hyprland config or startup script):
+
 ```bash
-hyprtouch
+hyprtouch --daemon &
 ```
 
-Launch the application to display a grid overlay on your focused monitor. Use keyboard shortcuts to navigate and click at specific locations.
+Then bind a key to toggle the overlay:
+
+```bash
+# In your hyprland.conf
+bind = SUPER, T, exec, hyprtouch --toggle-overlay
+```
+
+The overlay will appear instantly. When you click or press Escape, it hides automatically but keeps running in the background.
+
+### CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `hyprtouch --daemon` | Start the daemon process |
+| `hyprtouch --toggle-overlay` | Toggle overlay visibility (auto-starts daemon if needed) |
+| `hyprtouch --show` | Explicitly show the overlay |
+| `hyprtouch --hide` | Explicitly hide the overlay |
+| `hyprtouch --status` | Check if daemon is running |
+| `hyprtouch --stop` | Stop the running daemon |
+| `hyprtouch --legacy` | Run in old single-process mode (slower) |
 
 ### Input Options
 
@@ -66,7 +92,7 @@ Launch the application to display a grid overlay on your focused monitor. Use ke
 - **Double click**: Shift + Space/Enter
 
 #### Other Controls
-- **Escape**: Cancel current selection or exit application
+- **Escape**: Hide overlay (daemon mode) or exit application (legacy mode)
 - **Multi-level zoom**: Grid zooms in on selection for precision (2 levels max)
 
 ### Grid Labels
