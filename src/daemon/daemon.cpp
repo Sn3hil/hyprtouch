@@ -133,14 +133,14 @@ void Daemon::show_overlay() {
         return;
     }
 
-    // Create or recreate window if needed
-    if (!window_) {
-        const auto monitor = hypr::focused_monitor();
-        if (!monitor.valid()) {
-            g_printerr("Failed to detect focused monitor\n");
-            return;
-        }
+    const auto monitor = hypr::focused_monitor();
+    if (!monitor.valid()) {
+        g_printerr("Failed to detect focused monitor\n");
+        return;
+    }
 
+    // Create or update window setup
+    if (!window_) {
         window_ = std::make_unique<overlay::OverlayWindow>(app_, monitor);
         handler_ = std::make_unique<input::Handler>(*window_, [this]() {
             hide_overlay();
@@ -180,6 +180,8 @@ void Daemon::show_overlay() {
                 return FALSE;
             }, this);
         });
+    } else {
+        window_->set_monitor(monitor);
     }
 
     // Reset state and show window

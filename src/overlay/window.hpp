@@ -17,6 +17,7 @@ public:
     GtkWindow *window() const { return GTK_WINDOW(window_); }
 
     void reset_area();
+    void set_monitor(const hypr::MonitorInfo &monitor);
     void set_area(const mouse::Rect &area);
     const mouse::Rect &area() const { return area_; }
     const mouse::Rect &base_area() const { return base_area_; }

@@ -106,6 +106,22 @@ void OverlayWindow::reset_area() {
     queue_render();
 }
 
+void OverlayWindow::set_monitor(const hypr::MonitorInfo &monitor) {
+    monitor_ = monitor;
+    base_area_.x = monitor.x;
+    base_area_.y = monitor.y;
+    base_area_.width = monitor.width;
+    base_area_.height = monitor.height;
+    area_ = base_area_;
+    
+    gtk_widget_set_size_request(drawing_area_, monitor.width, monitor.height);
+    
+    if (GdkMonitor *mon = find_monitor(monitor_)) {
+        gtk_layer_set_monitor(GTK_WINDOW(window_), mon);
+    }
+    queue_render();
+}
+
 void OverlayWindow::set_area(const mouse::Rect &area) {
     area_ = area;
     queue_render();

@@ -2,12 +2,18 @@
   description = "hyprtouch - keyboard-driven mouse control overlay for Hyprland";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs { inherit system; };
       in
@@ -15,10 +21,10 @@
         packages.default = pkgs.stdenv.mkDerivation {
           pname = "hyprtouch";
           version = "0.1.0";
- 
+
           src = ./.;
 
-            nativeBuildInputs = [
+          nativeBuildInputs = [
             pkgs.meson
             pkgs.ninja
             pkgs.pkg-config
@@ -26,14 +32,12 @@
             pkgs.makeWrapper
           ];
 
-           buildInputs = [
+          buildInputs = [
             pkgs.gtk4
             pkgs.gtk4-layer-shell
             pkgs.nlohmann_json
             pkgs.wlrctl
           ];
-
-          
 
           # Force Cairo renderer to avoid EGL/Vulkan errors in sandboxed environments
           postFixup = ''
@@ -43,7 +47,7 @@
 
           meta = with pkgs.lib; {
             description = "Keyboard-only grid overlay to control the mouse in Hyprland";
-            homepage = "https://github.com/sn3hil/hyprtouch";
+            homepage = "https://github.com/Sn3hil/hyprtouch";
             license = licenses.mit;
             maintainers = [ ];
             platforms = platforms.linux;
@@ -64,7 +68,6 @@
             pkgs.wlrctl
           ];
         };
-      });
+      }
+    );
 }
-
-
